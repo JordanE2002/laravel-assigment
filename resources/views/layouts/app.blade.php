@@ -22,6 +22,15 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Admin Panel
                 </a>
+                <a class="btn btn-primary ms-3" href="{{ route('employees') }}">
+                     Employees
+                    </a>
+
+                    <a class="btn btn-primary ms-3" href="{{ route('companies') }}">
+                     Companies
+                    </a>
+
+
 
                 <!-- Toggle Button (for mobile view) -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 

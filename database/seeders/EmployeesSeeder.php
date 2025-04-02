@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Employees;
 
 class EmployeesSeeder extends Seeder
 {
@@ -12,6 +12,7 @@ class EmployeesSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // Create 50 fake employees
+        Employees::factory()->count(50)->create();
     }
 }
