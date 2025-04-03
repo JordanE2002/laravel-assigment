@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use resources\views\auth\info\employees;
+use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\CompaniesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +26,8 @@ Route::get('/employees', function () {
 Route::get('/companies', function () {
     return view('auth.info.companies'); // Ensure the view file exists
 })->name('companies');
+
+
+Route::get('/employees', [EmployeesController::class, 'index'])->name('employees');
+
+Route::get('/companies', [CompaniesController::class, 'index'])->name('companies');

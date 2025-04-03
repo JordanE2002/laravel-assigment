@@ -2,22 +2,24 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are in companies page!') }}
+    <h2>Companies</h2>
+    <div class="row">
+        @forelse ($companies as $company)
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        @include('auth.info.companies-logo', ['width' => 100]) <!-- Corrected name -->
+                        <h5 class="card-title mt-3">{{ $company->name }}</h5>
+                        <p class="card-text"><strong>Email:</strong> {{ $company->email }}</p>
+                        <p class="card-text">
+                            <a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        @empty
+            <p>No companies found.</p>
+        @endforelse
     </div>
 </div>
 @endsection

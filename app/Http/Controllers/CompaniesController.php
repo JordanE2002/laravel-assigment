@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Companiess; // Using plural model name
+use App\Models\Companies; // Using plural model name
 
 class CompaniesController extends Controller
 {
     // Show all companies
     public function index()
     {
-        //
+        $companies = Companies::all(); // Fetch all companies
+        return view('auth.info.companies', compact('companies'));
     }
 
     // Show a form to create a new company

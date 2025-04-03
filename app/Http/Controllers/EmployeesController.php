@@ -10,7 +10,8 @@ class EmployeesController extends Controller
     // Show all employees
     public function index()
     {
-        //
+        $employees = Employees::all(); // Fetch all employees
+        return view('auth.info.employees', compact('employees'));
     }
 
     // Show a form to create a new employee
