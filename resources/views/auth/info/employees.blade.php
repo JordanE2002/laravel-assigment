@@ -19,10 +19,24 @@
                                         <p class="card-text"><strong>Email:</strong> {{ $employee->email }}</p>
                                         <p class="card-text"><strong>Company:</strong> {{ $employee->company }}</p>
                                         <p class="card-text"><strong>Phone:</strong> {{ $employee->phone_number }}</p>
+
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="mt-2">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+                    </div>
+
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $employees->links() }}
                     </div>
 
                 </div>
@@ -31,4 +45,3 @@
     </div>
 </div>
 @endsection
-

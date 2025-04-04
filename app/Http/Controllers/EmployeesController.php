@@ -10,7 +10,7 @@ class EmployeesController extends Controller
     // Show all employees
     public function index()
     {
-        $employees = Employees::all(); // Fetch all employees
+        $employees = Employees::paginate(1);
         return view('auth.info.employees', compact('employees'));
     }
 
@@ -47,6 +47,7 @@ class EmployeesController extends Controller
     // Delete an employee from the database
     public function destroy(Employees $employee)
     {
-        //
+        $employee->delete();
+    return redirect()->route('employees')->with('status', 'Employee deleted successfully!');
     }
 }

@@ -5,8 +5,10 @@ use resources\views\auth\info\employees;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
 
+
+//Home page
 Route::get('/', function () {
-    return view('welcome');
+    return Auth::check() ? redirect()->route('home') : redirect()->route('login');
 });
 
 Auth::routes();
@@ -31,3 +33,9 @@ Route::get('/companies', function () {
 Route::get('/employees', [EmployeesController::class, 'index'])->name('employees');
 
 Route::get('/companies', [CompaniesController::class, 'index'])->name('companies');
+
+
+
+
+
+Route::delete('/employees/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
