@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Companies; // Using plural model name
+use App\Models\Companies;
 
 class CompaniesController extends Controller
 {
     // Show all companies
     public function index()
     {
-        $companies = Companies::all(); // Fetch all companies
+        $companies = Companies::paginate(10);
         return view('auth.info.companies', compact('companies'));
+
+   
     }
 
-    // Show a form to create a new company
+    // Show form to create a new company
     public function create()
     {
         return view('auth.info.create-company');
@@ -29,50 +31,47 @@ class CompaniesController extends Controller
             'website' => 'nullable|url',
             'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
         ]);
-    
-        // Check if user uploaded a logo
+
+        // Handle logo (upload or fallback to API)
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('logos', 'public');
             $logo = $path;
         } else {
-            // Fallback to random API image if no upload
             $logo = 'http://picsum.photos/seed/' . rand(0, 10000) . '/100';
         }
-    
+
         Companies::create([
             'name' => $request->name,
             'email' => $request->email,
             'website' => $request->website,
             'logo' => $logo,
         ]);
-    
+
         return redirect()->route('companies')->with('status', 'Company created successfully!');
     }
 
-    // Show details of a specific company
-    public function show(Companies $companies)
+    // Show a specific company (not implemented yet)
+    public function show(Companies $company)
     {
         //
     }
 
-    // Show a form to edit an existing company
-    public function edit(Companies $companies)
+    // Show form to edit an existing company (not implemented yet)
+    public function edit(Companies $company)
     {
         //
     }
 
-    // Update a company in the database
-    public function update(Request $request, Companies $companies)
+    // Update a company in the database (not implemented yet)
+    public function update(Request $request, Companies $company)
     {
         //
     }
 
-    // Delete a company from the database
-    public function destroy(Companies $companies)
+    // Delete a company
+    public function destroy(Companies $company)
     {
-        $companies->delete();
+        $company->delete();
         return redirect()->route('companies')->with('status', 'Company deleted successfully!');
-
-        
     }
 }

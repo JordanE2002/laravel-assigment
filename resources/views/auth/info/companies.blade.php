@@ -40,5 +40,10 @@
             <p>No companies found.</p>
         @endforelse
     </div>
+
+    <!-- Pagination Links -->
+    <div class="d-flex justify-content-center mt-4">
+        {{ $companies->links('vendor.pagination.bootstrap-5') }}
+    </div>
 </div>
 @endsection

@@ -13,30 +13,29 @@
                     <div class="row">
                         @foreach ($employees as $employee)
                             <div class="col-md-6 mb-4">
-                                <!-- Clickable card -->
-                                <a href="{{ route('employees.edit', $employee->id) }}" class="text-decoration-none text-dark">
-                                    <div class="card shadow-sm h-100 hover-shadow">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $employee->first_name }} {{ $employee->last_name }}</h5>
-                                            <p class="card-text"><strong>Email:</strong> {{ $employee->email }}</p>
-                                            <p class="card-text"><strong>Company:</strong> {{ $employee->company }}</p>
-                                            <p class="card-text"><strong>Phone:</strong> {{ $employee->phone_number }}</p>
+                                <!-- Card -->
+                                <div class="card shadow-sm h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $employee->first_name }} {{ $employee->last_name }}</h5>
+                                        <p class="card-text"><strong>Email:</strong> {{ $employee->email }}</p>
+                                        <p class="card-text"><strong>Company:</strong> {{ $employee->company }}</p>
+                                        <p class="card-text"><strong>Phone:</strong> {{ $employee->phone_number }}</p>
 
-                                            <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="mt-2">
-                                     @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">
-                              
-                                Delete
-                            </button>
-                        </form>
-                                        </div>
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-sm btn-warning">
+                                            Edit
+                                        </a>
+
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="mt-2">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </div>
-                                </a>
-
-                                <!-- Delete button below the card -->
-                        
-                                </form>
+                                </div>
                             </div>
                         @endforeach
                     </div>
