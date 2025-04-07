@@ -1,47 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use resources\views\auth\info\employees;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\HomeController;
 
-
-//Home page
+// Home page
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('home') : redirect()->route('login');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Home (dashboard) - requires login
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
+// Group routes that require authentication
+Route::middleware('auth')->group(function () {
 
+    // Employees
+    Route::get('/employees', [EmployeesController::class, 'index'])->name('employees');
+    Route::get('/employees/create', [EmployeesController::class, 'create'])->name('employees.create');
+    Route::post('/employees/store', [EmployeesController::class, 'store'])->name('employees.store');
+    Route::delete('/employees/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
 
-
-
-// Employees Page Route
-Route::get('/employees', function () {
-    return view('auth.info.employees'); // Ensure the view file exists
-})->name('employees');
-
-
-Route::get('/companies', function () {
-    return view('auth.info.companies'); // Ensure the view file exists
-})->name('companies');
-
-
-Route::get('/employees', [EmployeesController::class, 'index'])->name('employees');
-
-Route::get('/companies', [CompaniesController::class, 'index'])->name('companies');
-
-
-
-
-
-Route::delete('/employees/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
-
-
-
-
-Route::get('/employees/create', [EmployeesController::class, 'create'])->name('employees.create');
-Route::post('/employees/store', [EmployeesController::class, 'store'])->name('employees.store');
+    // Companies
+    Route::get('/companies', [CompaniesController::class, 'index'])->name('companies');
+    Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
+});

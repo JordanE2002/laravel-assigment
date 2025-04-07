@@ -47,6 +47,7 @@ class CompaniesController extends Controller
     // Delete a company from the database
     public function destroy(Companies $companies)
     {
-        
+        $companies->delete();
+        return redirect()->route('companies')->with('status', 'Company deleted successfully!');
     }
 }
