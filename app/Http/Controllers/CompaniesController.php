@@ -17,13 +17,36 @@ class CompaniesController extends Controller
     // Show a form to create a new company
     public function create()
     {
-        //
+        return view('auth.info.create-company');
     }
 
     // Store a newly created company in the database
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email',
+            'website' => 'nullable|url',
+            'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
+        ]);
+    
+        // Check if user uploaded a logo
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('logos', 'public');
+            $logo = $path;
+        } else {
+            // Fallback to random API image if no upload
+            $logo = 'http://picsum.photos/seed/' . rand(0, 10000) . '/100';
+        }
+    
+        Companies::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'website' => $request->website,
+            'logo' => $logo,
+        ]);
+    
+        return redirect()->route('companies')->with('status', 'Company created successfully!');
     }
 
     // Show details of a specific company
@@ -49,5 +72,7 @@ class CompaniesController extends Controller
     {
         $companies->delete();
         return redirect()->route('companies')->with('status', 'Company deleted successfully!');
+
+        
     }
 }

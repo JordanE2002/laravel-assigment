@@ -50,13 +50,30 @@ class EmployeesController extends Controller
     // Show a form to edit an existing employee
     public function edit(Employees $employee)
     {
-        //
+        return view('auth.info.edit-employee', compact('employee'));
+
     }
 
     // Update an employee in the database
     public function update(Request $request, Employees $employee)
     {
-        //
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:employees,email,' . $employee->id,
+            'company' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:20',
+        ]);
+    
+        $employee->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'company' => $request->company,
+            'phone_number' => $request->phone_number,
+        ]);
+    
+        return redirect()->route('employees')->with('status', 'Employee updated successfully!');
     }
 
     // Delete an employee from the database

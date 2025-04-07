@@ -3,12 +3,20 @@
 @section('content')
 <div class="container">
     <h2>Companies</h2>
+
+    <!-- Create Button -->
+    <div class="mb-4 text-end">
+        <a href="{{ route('companies.create') }}" class="btn btn-primary">
+            + Create New Company
+        </a>
+    </div>
+
     <div class="row">
         @forelse ($companies as $company)
             <div class="col-md-6 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        @include('auth.info.companies-logo', ['width' => 100]) <!-- Company Logo -->
+                        @include('auth.info.companies-logo', ['width' => 100])
 
                         <h5 class="card-title mt-3">{{ $company->name }}</h5>
                         <p class="card-text"><strong>Email:</strong> {{ $company->email }}</p>
@@ -21,7 +29,6 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">
-                              
                                 Delete
                             </button>
                         </form>

@@ -28,4 +28,15 @@ Route::middleware('auth')->group(function () {
     // Companies
     Route::get('/companies', [CompaniesController::class, 'index'])->name('companies');
     Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
+
+
+
+    Route::get('/employees/{employee}/edit', [EmployeesController::class, 'edit'])->name('employees.edit');
+Route::put('/employees/{employee}', [EmployeesController::class, 'update'])->name('employees.update');
+
+
+
+
+Route::get('/companies/create', [CompaniesController::class, 'create'])->name('companies.create');
+Route::post('/companies/store', [CompaniesController::class, 'store'])->name('companies.store');
 });
