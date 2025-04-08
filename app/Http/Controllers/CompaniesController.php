@@ -12,8 +12,6 @@ class CompaniesController extends Controller
     {
         $companies = Companies::paginate(10);
         return view('auth.info.companies', compact('companies'));
-
-   
     }
 
     // Show form to create a new company
@@ -56,16 +54,40 @@ class CompaniesController extends Controller
         //
     }
 
-    // Show form to edit an existing company (not implemented yet)
+    // Show form to edit an existing company
     public function edit(Companies $company)
     {
-        //
+        return view('auth.info.edit-companies', compact('company'));
     }
 
-    // Update a company in the database (not implemented yet)
+    // Update a company in the database
     public function update(Request $request, Companies $company)
     {
-        //
+        // Validate the incoming data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email',
+            'website' => 'nullable|url',
+            'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
+        ]);
+
+        // Handle logo upload (if a new logo is provided)
+        if ($request->hasFile('logo')) {
+            // Store the new logo
+            $path = $request->file('logo')->store('logos', 'public');
+            // Update the company's logo
+            $company->logo = $path;
+        }
+
+        // Update the company details
+        $company->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'website' => $request->website,
+            'logo' => $company->logo, // Update the logo only if a new one was uploaded
+        ]);
+
+        return redirect()->route('companies')->with('status', 'Company updated successfully!');
     }
 
     // Delete a company
