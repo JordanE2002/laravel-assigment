@@ -8,15 +8,15 @@ use App\Models\Companies;
 class CompaniesController extends Controller
 {
     // Show all companies
-    public function index()
-    {
+   public function index(Request $request)
+{
+    $sort = $request->query('sort', 'name'); // Default sort by name
+    $order = $request->query('order', 'asc'); // Default order
 
-        
-          $companies = Companies::paginate(10); // This fetches all companies
-    return view('auth.info.companies', compact('companies')); // Passing the companies to the view
-        
-    }
+    $companies = Companies::orderBy($sort, $order)->paginate(10);
 
+    return view('auth.info.companies', compact('companies', 'sort', 'order'));
+}
     // Show form to create a new company
     public function create()
     {

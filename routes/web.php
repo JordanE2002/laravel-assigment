@@ -37,4 +37,8 @@ Route::post('/companies/store', [CompaniesController::class, 'store'])->name('co
 
 Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
 Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
+
+
+
+
 });
