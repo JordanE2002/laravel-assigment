@@ -29,11 +29,11 @@ class EmployeesController extends Controller
     {
         // Validate incoming data, ensure 'company_id' is provided
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255|regex:/^[A-Za-z]+$/',
+            'last_name' => 'required|string|max:255|regex:/^[A-Za-z]+$/',
             'email' => 'required|email|unique:employees,email',
             'company_id' => 'required|exists:companies,id', // Validation for company_id
-            'phone_number' => 'nullable|string|max:20',
+            'phone_number' => 'nullable|string|min:10|max:20',
         ]);
 
         // Create the employee and associate the company by company_id
