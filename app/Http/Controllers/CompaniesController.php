@@ -10,8 +10,11 @@ class CompaniesController extends Controller
     // Show all companies
     public function index()
     {
-        $companies = Companies::paginate(10);
-        return view('auth.info.companies', compact('companies'));
+
+        
+          $companies = Companies::paginate(10); // This fetches all companies
+    return view('auth.info.companies', compact('companies')); // Passing the companies to the view
+        
     }
 
     // Show form to create a new company
@@ -27,7 +30,7 @@ class CompaniesController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'nullable|email',
             'website' => 'nullable|url',
-            'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
+            'logo' => 'nullable|image|dimensions:width=10000,height=1000000',
         ]);
 
         // Handle logo (upload or fallback to API)
@@ -35,7 +38,7 @@ class CompaniesController extends Controller
             $path = $request->file('logo')->store('logos', 'public');
             $logo = $path;
         } else {
-            $logo = 'http://picsum.photos/seed/' . rand(0, 10000) . '/100';
+            $logo = 'http://picsum.photos/seed/' . rand(0, 10000) ;
         }
 
         Companies::create([
