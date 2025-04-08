@@ -24,8 +24,15 @@
         </div>
 
         <div class="mb-3">
-            <label for="company" class="form-label">Company</label>
-            <input type="text" name="company" value="{{ old('company', $employee->company) }}" class="form-control" required>
+            <label for="company_id" class="form-label">Company</label>
+            <select name="company_id" class="form-select" required>
+                <option value="">-- Select Company --</option>
+                @foreach ($companies as $company)
+                    <option value="{{ $company->id }}" {{ $employee->company_id == $company->id ? 'selected' : '' }}>
+                        {{ $company->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mb-3">

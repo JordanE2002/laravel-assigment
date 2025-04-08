@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Optionally, you can add more seeders if needed.
-        $this->call(EmployeesSeeder::class);
         $this->call(CompaniesSeeder::class);
+        $this->call(EmployeesSeeder::class);
+     
     }
 }

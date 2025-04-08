@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Companies;
 use App\Models\Employees;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,7 +18,7 @@ class EmployeesFactory extends Factory
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'company' => $this->faker->company, // Generates a random company name
+            'company_id' => Companies::inRandomOrder()->first()->id, // Random company ID for each employee
             'email' => $this->faker->unique()->safeEmail,
             'phone_number' => $this->faker->phoneNumber,
             'created_at' => now(),

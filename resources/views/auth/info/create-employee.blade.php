@@ -37,8 +37,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="company" class="form-label">Company</label>
-                            <input type="text" class="form-control" id="company" name="company">
+                            <label for="company_id" class="form-label">Company</label>
+                            <select class="form-control" id="company_id" name="company_id" required>
+                                <option value="" disabled selected>Select a Company</option>
+                                @foreach($companies as $company)
+                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3">
