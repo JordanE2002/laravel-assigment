@@ -2,20 +2,39 @@
 
 @section('content')
 <div class="container">
-    <h2>Employees at {{ $company->name }}</h2>
+    <h2 class="mb-4">Employees at {{ $company->name }}</h2>
 
     @if($employees->count())
-        <ul class="list-group mt-4">
-            @foreach($employees as $employee)
-                <li class="list-group-item">
-                    {{ $employee->first_name }} {{ $employee->last_name }} - {{ $employee->email }} - {{ $employee->phone_number }}
-                </li>
-            @endforeach
-        </ul>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($employees as $index => $employee)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $employee->first_name }} {{ $employee->last_name }}</td>
+                            <td>{{ $employee->email }}</td>
+                            <td>{{ $employee->phone_number }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     @else
-        <p class="mt-4">No employees found for this company.</p>
+        <div class="alert alert-info mt-4">
+            No employees found for this company.
+        </div>
     @endif
 
-    <a href="{{ route('companies') }}" class="btn btn-secondary mt-4">← Back to Companies</a>
+    <a href="{{ route('companies') }}" class="btn btn-secondary mt-4">
+        ← Back to Companies
+    </a>
 </div>
 @endsection
