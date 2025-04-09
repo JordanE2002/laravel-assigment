@@ -51,20 +51,24 @@
                                             <a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a>
                                         </p>
 
-                                        <!-- Edit -->
-                                        <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-warning">
-                                            Edit
-                                        </a>
+                                        <!-- Buttons Row -->
+                                        <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap">
+                                            <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-warning">
+                                                Edit
+                                            </a>
 
-                                        <!-- Delete -->
-                                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="mt-2">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                Delete
-                                            </button>
-                                        </form>
-                                        
+                                            <form action="{{ route('companies.destroy', $company->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                            <a href="{{ route('companies.employees', $company->id) }}" class="btn btn-sm btn-info">
+                                                View Employees
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -84,4 +88,3 @@
     </div>
 </div>
 @endsection
-n

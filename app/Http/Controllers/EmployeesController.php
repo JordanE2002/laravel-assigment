@@ -91,4 +91,10 @@ class EmployeesController extends Controller
         $employee->delete();
         return redirect()->route('employees')->with('status', 'Employee deleted successfully!');
     }
+
+    public function employeesByCompany(Companies $company)
+{
+    $employees = $company->employees; // Uses the relationship
+    return view('auth.info.employees-by-company', compact('company', 'employees'));
+}
 }

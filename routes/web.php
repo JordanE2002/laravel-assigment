@@ -39,6 +39,9 @@ Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->n
 Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
 
 
+Route::get('/companies/{company}/employees', [EmployeesController::class, 'employeesByCompany'])->name('companies.employees');
+
+
 
 
 });
