@@ -10,10 +10,14 @@ use App\Models\Companies; // Ensure you import the Companies model
 class EmployeesController extends Controller
 {
     // Show all employees
-    public function index()
+    public function index(Request $request)
+    
     {
-        $employees = Employees::paginate(10);
-        return view('auth.info.employees', compact('employees'));
+        $sort = $request->query('sort', 'name'); // Default sort by name
+        $order = $request->query('order', 'asc'); // Default order
+
+        $employees = Employees::orderBy($sort, $order)->paginate(10);
+        return view('auth.info.employees', compact('employees', 'sort', 'order'));
     }
 
     // Show a form to create a new employee

@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Companies') }}</div>
 
                 <div class="card-body">
-                    <h3 class="mb-4">Company List</h3>
+                <x-header>Company</x-header>
 
                     <!-- Create Button -->
                     <div class="mb-4 d-flex justify-content-between align-items-center">

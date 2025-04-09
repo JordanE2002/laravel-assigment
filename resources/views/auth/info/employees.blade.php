@@ -8,13 +8,29 @@
                 <div class="card-header">{{ __('Employees') }}</div>
 
                 <div class="card-body">
-                    <h3 class="mb-4">Employee List</h3>
+                   <x-header>Employee List</x-header>
 
                     <!-- Create New Employee -->
                     <div class="mb-4 text-end">
                         <a href="{{ route('employees.create') }}" class="btn btn-primary">
                             + Create New Employee
                         </a>
+
+                        
+                        <!-- Sort Form -->
+                        <form method="GET" action="{{ route('employees') }}" class="d-flex align-items-center">
+                            <label class="me-2">Sort by:</label>
+                            <select name="sort" onchange="this.form.submit()" class="form-select w-auto me-2">
+                                <option value="first_name" {{ request('sort') == 'first_name' ? 'selected' : '' }}>First name</option>
+                                <option value="last_name" {{ request('sort') == 'last_name' ? 'selected' : '' }}>Last name</option>
+                                <option value="email" {{ request('sort') == 'email' ? 'selected' : '' }}>email</option>
+                            </select>
+
+                            <select name="order" onchange="this.form.submit()" class="form-select w-auto">
+                                <option value="asc" {{ request('order') == 'asc' ? 'selected' : '' }}>ASC</option>
+                                <option value="desc" {{ request('order') == 'desc' ? 'selected' : '' }}>DESC</option>
+                            </select>
+                        </form>
                     </div>
 
                     <!-- Employee Cards -->
