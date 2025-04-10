@@ -69,7 +69,7 @@ class CompaniesController extends Controller
         // Validate the incoming data
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'nullable|email',
+           'email' => ['nullable', 'email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
             'website' => 'nullable|url',
             'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
         ]);
