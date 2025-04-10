@@ -78,9 +78,9 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $companies->appends(request()->query())->links('vendor.pagination.bootstrap-5') }}
-                    </div>
+                    <x-pagination-wrapper>
+              {{ $companies->appends(request()->query())->links('vendor.pagination.bootstrap-5') }}
+               </x-pagination-wrapper>
 
                 </div>
             </div>

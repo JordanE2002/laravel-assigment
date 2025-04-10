@@ -61,6 +61,8 @@ class EmployeesController extends Controller
     // Show a form to edit an existing employee
     public function edit(Employees $employee)
     {
+
+        
         $companies = Companies::all(); // Fetch companies for dropdown in the edit form
         return view('auth.info.edit-employee', compact('employee', 'companies'));
     }
@@ -74,7 +76,7 @@ class EmployeesController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:employees,email,' . $employee->id,
             'company_id' => 'required|exists:companies,id', // Validation for company_id
-            'phone_number' => 'nullable|string|max:20',
+            'phone_number' => 'nullable|string|min:10|:max:20',
         ]);
 
         // Update the employee with new values
