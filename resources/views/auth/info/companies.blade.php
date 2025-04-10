@@ -8,28 +8,19 @@
                 <div class="card-header">{{ __('Companies') }}</div>
 
                 <div class="card-body">
-                <x-header>Company</x-header>
+                    <x-header>Company</x-header>
 
-                    <!-- Create Button -->
-                    <div class="mb-4 d-flex justify-content-between align-items-center">
+                    <!-- Create + Sort -->
+                    <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
                         <a href="{{ route('companies.create') }}" class="btn btn-primary">
                             + Create New Company
                         </a>
 
-                        <!-- Sort Form -->
-                        <form method="GET" action="{{ route('companies') }}" class="d-flex align-items-center">
-                            <label class="me-2">Sort by:</label>
-                            <select name="sort" onchange="this.form.submit()" class="form-select w-auto me-2">
-                                <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Name</option>
-                                <option value="email" {{ request('sort') == 'email' ? 'selected' : '' }}>Email</option>
-                                <option value="website" {{ request('sort') == 'website' ? 'selected' : '' }}>Website</option>
-                            </select>
-
-                            <select name="order" onchange="this.form.submit()" class="form-select w-auto">
-                                <option value="asc" {{ request('order') == 'asc' ? 'selected' : '' }}>ASC</option>
-                                <option value="desc" {{ request('order') == 'desc' ? 'selected' : '' }}>DESC</option>
-                            </select>
-                        </form>
+                        <x-sort-form :action="route('companies')">
+                            <option value="name" {{ request('sort') === 'name' ? 'selected' : '' }}>Name</option>
+                            <option value="email" {{ request('sort') === 'email' ? 'selected' : '' }}>Email</option>
+                            <option value="website" {{ request('sort') === 'website' ? 'selected' : '' }}>Website</option>
+                        </x-sort-form>
                     </div>
 
                     <!-- Company Cards -->
@@ -51,23 +42,17 @@
                                             <a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a>
                                         </p>
 
-                                        <!-- Buttons Row -->
+                                        <!-- Buttons -->
                                         <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap">
-                                            <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-warning">
-                                                Edit
-                                            </a>
+                                            <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-warning">Edit</a>
 
                                             <form action="{{ route('companies.destroy', $company->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">
-                                                    Delete
-                                                </button>
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                             </form>
 
-                                            <a href="{{ route('companies.employees', $company->id) }}" class="btn btn-sm btn-info">
-                                                View Employees
-                                            </a>
+                                            <a href="{{ route('companies.employees', $company->id) }}" class="btn btn-sm btn-info">View Employees</a>
                                         </div>
                                     </div>
                                 </div>
@@ -79,9 +64,8 @@
 
                     <!-- Pagination -->
                     <x-pagination-wrapper>
-              {{ $companies->appends(request()->query())->links('vendor.pagination.bootstrap-5') }}
-               </x-pagination-wrapper>
-
+                        {{ $companies->appends(request()->query())->links('vendor.pagination.bootstrap-5') }}
+                    </x-pagination-wrapper>
                 </div>
             </div>
         </div>
