@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Companies') }}</div>
 
                 <div class="card-body">
-                    <x-header>Company</x-header>
+                    <x-header>Company List</x-header>
 
                     <!-- Create -->
                     <x-create-button 
