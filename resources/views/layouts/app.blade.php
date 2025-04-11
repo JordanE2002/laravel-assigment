@@ -20,7 +20,7 @@
             <div class="container">
                 <!-- Navbar Title -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Admin Panel
+                    Home
                 </a>
                 <a class="btn btn-primary ms-3" href="{{ route('employees') }}">
                      Employees
