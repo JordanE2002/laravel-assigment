@@ -9,19 +9,19 @@
             <table class="table table-bordered table-striped align-middle shadow-sm">
                 <thead class="table-dark">
                     <tr>
-                      
                         <th scope="col">Full Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
+                        <th scope="col">Date Created</th> <!-- New Column for Date Created -->
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($employees as $index => $employee)
+                    @foreach($employees as $employee)
                         <tr>
-                           
                             <td>{{ $employee->first_name }} {{ $employee->last_name }}</td>
                             <td>{{ $employee->email }}</td>
                             <td>{{ $employee->phone_number }}</td>
+                            <td>{{ $employee->created_at->format('D, M d, Y') }}</td> <!-- Displaying the created_at date -->
                         </tr>
                     @endforeach
                 </tbody>
