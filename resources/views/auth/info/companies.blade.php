@@ -10,12 +10,12 @@
                 <div class="card-body">
                     <x-header>Company</x-header>
 
-                    <!-- Create + Sort -->
-                    <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-                        <a href="{{ route('companies.create') }}" class="btn btn-primary">
-                            + Create New Company
-                        </a>
-
+                    <!-- Create -->
+                    <x-create-button 
+    :route="route('companies.create')" 
+    label="Create New Company" 
+/>
+                            <!-- Sort -->
                         <x-sort-form :action="route('companies')">
                             <option value="name" {{ request('sort') === 'name' ? 'selected' : '' }}>Name</option>
                             <option value="email" {{ request('sort') === 'email' ? 'selected' : '' }}>Email</option>
