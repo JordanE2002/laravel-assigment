@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Companies;
+use Illuminate\Validation\Rule;
 
 class CompaniesController extends Controller
 {
     // Show all companies
-   public function index(Request $request)
-{
-    $sort = $request->query('sort', 'name'); // Default sort by name
-    $order = $request->query('order', 'asc'); // Default order
+    public function index(Request $request)
+    {
+        $sort = $request->query('sort', 'name'); // Default sort by name
+        $order = $request->query('order', 'asc'); // Default order
 
-    $companies = Companies::orderBy($sort, $order)->paginate(10);
+        $companies = Companies::orderBy($sort, $order)->paginate(10);
 
-    return view('auth.info.companies', compact('companies', 'sort', 'order'));
-}
+        return view('auth.info.companies', compact('companies', 'sort', 'order'));
+    }
+
     // Show form to create a new company
     public function create()
     {
@@ -28,9 +30,16 @@ class CompaniesController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:3|max:255',
-            'email' => ['nullable', 'email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
+            'email' => [
+                'nullable',
+                'email',
+                'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/',
+                'unique:companies,email', // Enforce unique email
+            ],
             'website' => 'nullable|url',
             'logo' => 'nullable|image',
+        ], [
+            'email.unique' => 'This email is already taken.', // Custom error message
         ]);
 
         // Handle logo (upload or fallback to API)
@@ -38,7 +47,7 @@ class CompaniesController extends Controller
             $path = $request->file('logo')->store('logos', 'public');
             $logo = $path;
         } else {
-            $logo = 'http://picsum.photos/seed/' . rand(0, 10000) ;
+            $logo = 'http://picsum.photos/seed/' . rand(0, 10000);
         }
 
         Companies::create([
@@ -66,19 +75,23 @@ class CompaniesController extends Controller
     // Update a company in the database
     public function update(Request $request, Companies $company)
     {
-        // Validate the incoming data
         $request->validate([
             'name' => 'required|string|max:255',
-           'email' => ['nullable', 'email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
+            'email' => [
+                'nullable',
+                'email',
+                'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/',
+                Rule::unique('companies', 'email')->ignore($company->id), // Ignore current email
+            ],
             'website' => 'nullable|url',
             'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
+        ], [
+            'email.unique' => 'This email is already taken.', // Consistent custom message
         ]);
 
         // Handle logo upload (if a new logo is provided)
         if ($request->hasFile('logo')) {
-            // Store the new logo
             $path = $request->file('logo')->store('logos', 'public');
-            // Update the company's logo
             $company->logo = $path;
         }
 
@@ -87,7 +100,7 @@ class CompaniesController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'website' => $request->website,
-            'logo' => $company->logo, // Update the logo only if a new one was uploaded
+            'logo' => $company->logo,
         ]);
 
         return redirect()->route('companies')->with('status', 'Company updated successfully!');
