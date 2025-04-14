@@ -30,7 +30,7 @@ class CompaniesController extends Controller
             'name' => 'required|string|min:3|max:255',
             'email' => ['nullable', 'email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
             'website' => 'nullable|url',
-            'logo' => 'nullable|image|dimensions:width=10000,height=1000000',
+            'logo' => 'nullable|image',
         ]);
 
         // Handle logo (upload or fallback to API)

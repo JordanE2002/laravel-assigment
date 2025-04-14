@@ -13,6 +13,6 @@ class CompaniesSeeder extends Seeder
      */
     public function run(): void
     {
-         Companies::factory()->count(20)->create(); // Creates 20 fake companies
+         Companies::factory()->count(100)->create(); // Creates 20 fake companies
     }
 }
