@@ -16,11 +16,13 @@
     label="Create New Employee" 
 />
                             <!-- Sort -->
-                        <x-sort-form :action="route('employees')">
-                            <option value="first_name" {{ request('sort') === 'first_name' ? 'selected' : '' }}>First name</option>
-                            <option value="last_name" {{ request('sort') === 'last_name' ? 'selected' : '' }}>Last name</option>
-                            <option value="email" {{ request('sort') === 'email' ? 'selected' : '' }}>Email</option>
-                        </x-sort-form>
+                            <x-sort-form :action="route('employees')">
+    <option value="first_name" {{ request('sort') === 'first_name' ? 'selected' : '' }}>First Name</option>
+    <option value="last_name" {{ request('sort') === 'last_name' ? 'selected' : '' }}>Last Name</option>
+    <option value="email" {{ request('sort') === 'email' ? 'selected' : '' }}>Email</option>
+    <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Newest</option>
+    <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Oldest</option>
+</x-sort-form>
                     </div>
 
                     <!-- Employee Cards -->
