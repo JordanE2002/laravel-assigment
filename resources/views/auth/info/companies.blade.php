@@ -16,11 +16,13 @@
     label="Create New Company" 
 />
                             <!-- Sort -->
-                        <x-sort-form :action="route('companies')">
-                            <option value="name" {{ request('sort') === 'name' ? 'selected' : '' }}>Name</option>
-                            <option value="email" {{ request('sort') === 'email' ? 'selected' : '' }}>Email</option>
-                            <option value="website" {{ request('sort') === 'website' ? 'selected' : '' }}>Website</option>
-                        </x-sort-form>
+                            <x-sort-form :action="route('companies')">
+    <option value="name" {{ request('sort') === 'name' ? 'selected' : '' }}>Name</option>
+    <option value="email" {{ request('sort') === 'email' ? 'selected' : '' }}>Email</option>
+    <option value="website" {{ request('sort') === 'website' ? 'selected' : '' }}>Website</option>
+    <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Newest</option>
+    <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Oldest</option>
+</x-sort-form>
                     </div>
 
                     <!-- Company Cards -->

@@ -9,15 +9,26 @@ use Illuminate\Validation\Rule;
 class CompaniesController extends Controller
 {
     // Show all companies
-    public function index(Request $request)
-    {
-        $sort = $request->query('sort', 'name'); // Default sort by name
-        $order = $request->query('order', 'asc'); // Default order
+// Show all companies
+public function index(Request $request)
+{
+    $sort = $request->query('sort', 'name'); // Default sort by name
+    $order = $request->query('order', 'asc'); // Default order
 
-        $companies = Companies::orderBy($sort, $order)->paginate(10);
-
-        return view('auth.info.companies', compact('companies', 'sort', 'order'));
+    // Handle special case for newest/oldest
+    if ($sort === 'newest') {
+        $sort = 'created_at';
+        $order = 'desc';
+    } elseif ($sort === 'oldest') {
+        $sort = 'created_at';
+        $order = 'asc';
     }
+
+    $companies = Companies::orderBy($sort, $order)->paginate(10);
+
+    return view('auth.info.companies', compact('companies', 'sort', 'order'));
+}
+
 
     // Show form to create a new company
     public function create()
